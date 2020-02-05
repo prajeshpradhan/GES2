@@ -221,7 +221,7 @@
     <div class="footer-top">
         <div class="footer-desc">
             <div class="footer-logo">
-                <img src="{{asset('images/GES_Logo_New.png')}}" class="img-responsive">
+                <img src="{{asset('images/GES%20Logo%20New.png')}}" class="img-responsive">
             </div>
             <div class="quick-link">
                 <p><i class="fa fa-map-marker"></i> Sanepa, Lalitpur</p>
