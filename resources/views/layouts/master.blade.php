@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css">
     <link rel="stylesheet" href="{{asset('style/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('style/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('style/css/index.css')}}">
 
     <link rel="stylesheet" href="{{asset('style/css/animate.css')}}">
 
@@ -35,10 +36,10 @@
             <div id="bannerText-edit" class="edit-btn upw">
                 <span>Edit Banner Text <i class="fa fa-edit"></i> </span>
             </div>
-        @endauth
     </div>
     <div id="cover-edit" class="edit-btn top-right">
         <span>Edit Cover Image <i class="fa fa-edit"></i> </span>
+        @endauth
     </div>
 
 </div>
@@ -89,20 +90,24 @@
                 This section contains brief description of service name. This section contains brief description of service name. This section contains brief description of service name. This section contains brief description of service name.
             </p>
             <button class="sercive-btn">Learn More</button>
+            @auth
             <div class="edit-btn service-tr">
                 <span> <i class="fa fa-edit"></i> </span>
             </div>
-
+            @endauth
         </div>
     </div>
 </div>
 <div id="project" class="project-container">
     <h1 class="head-color section-title"> Our projects</h1>
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#home">Cat A</a></li>
-        <li><a data-toggle="tab" href="#menu1">Cat B</a></li>
-        <li><a data-toggle="tab" href="#menu2">Cat C</a></li>
-        <li><a data-toggle="tab" href="#menu3">Cat D</a></li>
+        @foreach($categories as $category)
+            @if($loop->first)
+                <li class="active"><a data-toggle="tab" href="#home">{{$category->name}}</a></li>
+            @else
+                <li><a data-toggle="tab" href="#menu1">{{$category->name}}</a></li>
+            @endif
+        @endforeach
     </ul>
     <div class="tab-content">
         <div id="home" class="tab-pane fade in active">
