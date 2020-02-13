@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Project;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -16,6 +17,11 @@ class HomeController extends Controller
     public function index()
     {
         $category = Category::all();
-        return view('layouts.master')->with('categories',$category);
+        $projects = Project::all();
+        $data = [
+            "categories"=>$category,
+            "projects"=>$projects,
+        ];
+        return view('layouts.master')->with($data);
     }
 }

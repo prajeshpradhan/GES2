@@ -103,128 +103,42 @@
     <ul class="nav nav-tabs">
         @foreach($categories as $category)
             @if($loop->first)
-                <li class="active"><a data-toggle="tab" href="#home">{{$category->name}}</a></li>
+                <li class="active"><a data-toggle="tab" href="#{{$category->id}}">{{$category->name}}</a></li>
             @else
-                <li><a data-toggle="tab" href="#menu1">{{$category->name}}</a></li>
+                <li><a data-toggle="tab" href="#{{$category->id}}">{{$category->name}}</a></li>
             @endif
         @endforeach
     </ul>
     <div class="tab-content">
-        <div id="home" class="tab-pane fade in active">
-            <h3>project category A</h3>
-            <div class="project-detail">
-                <div class="project">
-                    <img src="images/banner/consult-main-banner.jpg" class="img-responsive">
-                    <h4>project Title</h4>
-                    <p>Brief description on project here. Brief description on project here.</p>
-                    <div class="edit-btn  project-tr">
-                        <span><i class="fa fa-edit"></i> </span>
+        @foreach($categories as $category)
+            @if($loop->first)
+            <div id="{{$category->id}}" class="tab-pane fade in active">
+            @else
+            <div id="{{$category->id}}" class="tab-pane fade">
+            @endif
+                    <h3>project category A</h3>
+                    <div class="project-detail">
+                    @foreach($projects as $project)
+                        @if($project->category_id == $category->id)
+                            <div class="project">
+                                <img src="images/banner/consult-main-banner.jpg" class="img-responsive">
+                                <h4>{{$project->name}}</h4>
+                                <p>{{$project->description}}</p>
+                                <div class="edit-btn  project-tr">
+                                    <span><i class="fa fa-edit"></i> </span>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
                     </div>
-                </div>
-                <div class="project">
-                    <img src="images/banner/service-banner.jpg" class="img-responsive">
-                    <h4>project Title</h4>
-                    <p>Brief description on project here. Brief description on project here.</p>
-                    <div class="edit-btn  project-tr">
-                        <span><i class="fa fa-edit"></i> </span>
-                    </div>
-                </div>
-                <div class="project">
-                    <img src="images/banner/consult-main-banner.jpg" class="img-responsive">
-                    <h4>project Title</h4>
-                    <p>Brief description on project here. Brief description on project here.</p>
-                    <div class="edit-btn  project-tr">
-                        <span><i class="fa fa-edit"></i> </span>
-                    </div>
-                </div>
-                <div class="project">
-                    <img src="images/banner/consult-main-banner.jpg" class="img-responsive">
-                    <h4>project Title</h4>
-                    <p>Brief description on project here. Brief description on project here.</p>
-                    <div class="edit-btn  project-tr">
-                        <span><i class="fa fa-edit"></i> </span>
-                    </div>
-                </div>
             </div>
-        </div>
-        <div id="menu1" class="tab-pane fade">
-            <h3>project category B</h3>
-            <div class="project-detail">
-                <div class="project">
-                    <img src="images/banner/service-banner.jpg" class="img-responsive">
-                    <h4>project Title</h4>
-                    <p>Brief description on project here. Brief description on project here.</p>
-                    <div class="edit-btn  project-tr">
-                        <span><i class="fa fa-edit"></i> </span>
-                    </div>
-                </div>
-                <div class="project">
-                    <img src="images/banner/service-banner.jpg" class="img-responsive">
-                    <h4>project Title</h4>
-                    <p>Brief description on project here. Brief description on project here.</p>
-                    <div class="edit-btn  project-tr">
-                        <span><i class="fa fa-edit"></i> </span>
-                    </div>
-                </div>
-                <div class="project">
-                    <img src="images/banner/service-banner.jpg" class="img-responsive">
-                    <h4>project Title</h4>
-                    <p>Brief description on project here. Brief description on project here.</p>
-                    <div class="edit-btn  project-tr">
-                        <span><i class="fa fa-edit"></i> </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="menu2" class="tab-pane fade">
-            <h3>project category C</h3>
-            <div class="project-detail">
-                <div class="project">
-                    <img src="images/banner/consult-main-banner.jpg" class="img-responsive">
-                    <h4>project Title</h4>
-                    <p>Brief description on project here. Brief description on project here.</p>
-                    <div class="edit-btn  project-tr">
-                        <span><i class="fa fa-edit"></i> </span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div id="menu3" class="tab-pane fade">
-            <h3>project category D</h3>
-            <div class="project-detail">
-                <div class="project">
-                    <img src="images/banner/consult-main-banner.jpg" class="img-responsive">
-                    <h4>project Title</h4>
-                    <p>Brief description on project here. Brief description on project here.</p>
-                    <div class="edit-btn  project-tr">
-                        <span><i class="fa fa-edit"></i> </span>
-                    </div>
-                </div>
-                <div class="project">
-                    <img src="images/banner/service-banner.jpg" class="img-responsive">
-                    <h4>project Title</h4>
-                    <p>Brief description on project here. Brief description on project here.</p>
-                    <div class="edit-btn  project-tr">
-                        <span><i class="fa fa-edit"></i> </span>
-                    </div>
-                </div>
-                <div class="project">
-                    <img src="images/banner/consult-main-banner.jpg" class="img-responsive">
-                    <h4>project Title</h4>
-                    <p>Brief description on project here. Brief description on project here.</p>
-                    <div class="edit-btn  project-tr">
-                        <span><i class="fa fa-edit"></i> </span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @endforeach
     </div>
     <div class="edit-btn  project-tr">
         <span>Add New Project <i class="fa fa-plus"></i> </span>
     </div>
 </div>
-
+</div>
 <div id="count" class="count-container">
     <div class="count-wrapper">
         <h2 class="section-title white">Demographics</h2>
