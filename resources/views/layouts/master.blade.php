@@ -344,6 +344,24 @@
     }
 
 </script>
+<script>
+    $('.main-banner').hover(
+            function () {
+                $('#cover-edit',this).stop(true,true).fadeIn("fast");
+                $(this).toggleClass('open');
+                $('#bannerText-edit').show();
+
+            },
+            function () {
+                $('#cover-edit',this).stop(true,true).fadeOut("fast");
+                $(this).toggleClass('open');
+                $('#bannerText-edit').hide();
+
+
+            }
+
+    );
+</script>
 
 </body>
 </html>
