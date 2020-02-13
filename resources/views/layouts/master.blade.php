@@ -20,7 +20,6 @@
     <script src="{{asset('style/js/jquery.livequery.min.js')}}"></script>
 
 
-
 </head>
 <body>
 @include('layouts.header')
@@ -32,9 +31,16 @@
             <button class="bn-btn blue-bg left">Button</button>
             <button class="bn-btn red-bg right">Second Button </button>
         </div>
-
-
+        @auth
+            <div id="bannerText-edit" class="edit-btn upw">
+                <span>Edit Banner Text <i class="fa fa-edit"></i> </span>
+            </div>
+        @endauth
     </div>
+    <div id="cover-edit" class="edit-btn top-right">
+        <span>Edit Cover Image <i class="fa fa-edit"></i> </span>
+    </div>
+
 </div>
 
 <div class="services-container">
@@ -51,6 +57,11 @@
                 This section contains brief description of service name. This section contains brief description of service name. This section contains brief description of service name. This section contains brief description of service name.
             </p>
             <button class="sercive-btn">Learn More</button>
+            @auth
+            <div class="edit-btn service-tr">
+                <span> <i class="fa fa-edit"></i> </span>
+            </div>
+            @endauth
         </div>
         <div class="service-block">
             <div class="service-icon">
@@ -62,6 +73,11 @@
 
             </p>
             <button class="sercive-btn">Learn More</button>
+            @auth
+            <div class="edit-btn service-tr">
+                <span> <i class="fa fa-edit"></i> </span>
+            </div>
+            @endauth
 
         </div>
         <div class="service-block">
@@ -73,9 +89,11 @@
                 This section contains brief description of service name. This section contains brief description of service name. This section contains brief description of service name. This section contains brief description of service name.
             </p>
             <button class="sercive-btn">Learn More</button>
+            <div class="edit-btn service-tr">
+                <span> <i class="fa fa-edit"></i> </span>
+            </div>
 
         </div>
-
     </div>
 </div>
 <div id="project" class="project-container">
@@ -91,24 +109,36 @@
             <h3>project category A</h3>
             <div class="project-detail">
                 <div class="project">
-                    <img src="{{asset('images/banner/consult-main-banner.jpg')}}" class="img-responsive">
+                    <img src="images/banner/consult-main-banner.jpg" class="img-responsive">
                     <h4>project Title</h4>
                     <p>Brief description on project here. Brief description on project here.</p>
+                    <div class="edit-btn  project-tr">
+                        <span><i class="fa fa-edit"></i> </span>
+                    </div>
                 </div>
                 <div class="project">
-                    <img src="{{asset('images/banner/service-banner.jpg')}}" class="img-responsive">
+                    <img src="images/banner/service-banner.jpg" class="img-responsive">
                     <h4>project Title</h4>
                     <p>Brief description on project here. Brief description on project here.</p>
+                    <div class="edit-btn  project-tr">
+                        <span><i class="fa fa-edit"></i> </span>
+                    </div>
                 </div>
                 <div class="project">
-                    <img src="{{asset('images/banner/consult-main-banner.jpg')}}" class="img-responsive">
+                    <img src="images/banner/consult-main-banner.jpg" class="img-responsive">
                     <h4>project Title</h4>
                     <p>Brief description on project here. Brief description on project here.</p>
+                    <div class="edit-btn  project-tr">
+                        <span><i class="fa fa-edit"></i> </span>
+                    </div>
                 </div>
                 <div class="project">
-                    <img src="{{asset('images/banner/consult-main-banner.jpg')}}" class="img-responsive">
+                    <img src="images/banner/consult-main-banner.jpg" class="img-responsive">
                     <h4>project Title</h4>
                     <p>Brief description on project here. Brief description on project here.</p>
+                    <div class="edit-btn  project-tr">
+                        <span><i class="fa fa-edit"></i> </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -116,19 +146,28 @@
             <h3>project category B</h3>
             <div class="project-detail">
                 <div class="project">
-                    <img src="{{asset('images/banner/service-banner.jpg')}}" class="img-responsive">
+                    <img src="images/banner/service-banner.jpg" class="img-responsive">
                     <h4>project Title</h4>
                     <p>Brief description on project here. Brief description on project here.</p>
+                    <div class="edit-btn  project-tr">
+                        <span><i class="fa fa-edit"></i> </span>
+                    </div>
                 </div>
                 <div class="project">
-                    <img src="{{asset('images/banner/service-banner.jpg')}}" class="img-responsive">
+                    <img src="images/banner/service-banner.jpg" class="img-responsive">
                     <h4>project Title</h4>
                     <p>Brief description on project here. Brief description on project here.</p>
+                    <div class="edit-btn  project-tr">
+                        <span><i class="fa fa-edit"></i> </span>
+                    </div>
                 </div>
                 <div class="project">
-                    <img src="{{asset('images/banner/service-banner.jpg')}}" class="img-responsive">
+                    <img src="images/banner/service-banner.jpg" class="img-responsive">
                     <h4>project Title</h4>
                     <p>Brief description on project here. Brief description on project here.</p>
+                    <div class="edit-btn  project-tr">
+                        <span><i class="fa fa-edit"></i> </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -136,9 +175,12 @@
             <h3>project category C</h3>
             <div class="project-detail">
                 <div class="project">
-                    <img src="{{asset('images/banner/consult-main-banner.jpg')}}" class="img-responsive">
+                    <img src="images/banner/consult-main-banner.jpg" class="img-responsive">
                     <h4>project Title</h4>
                     <p>Brief description on project here. Brief description on project here.</p>
+                    <div class="edit-btn  project-tr">
+                        <span><i class="fa fa-edit"></i> </span>
+                    </div>
                 </div>
             </div>
 
@@ -147,22 +189,34 @@
             <h3>project category D</h3>
             <div class="project-detail">
                 <div class="project">
-                    <img src="{{asset('images/banner/consult-main-banner.jpg')}}" class="img-responsive">
+                    <img src="images/banner/consult-main-banner.jpg" class="img-responsive">
                     <h4>project Title</h4>
                     <p>Brief description on project here. Brief description on project here.</p>
+                    <div class="edit-btn  project-tr">
+                        <span><i class="fa fa-edit"></i> </span>
+                    </div>
                 </div>
                 <div class="project">
-                    <img src="{{asset('images/banner/service-banner.jpg')}}" class="img-responsive">
+                    <img src="images/banner/service-banner.jpg" class="img-responsive">
                     <h4>project Title</h4>
                     <p>Brief description on project here. Brief description on project here.</p>
+                    <div class="edit-btn  project-tr">
+                        <span><i class="fa fa-edit"></i> </span>
+                    </div>
                 </div>
                 <div class="project">
-                    <img src="{{asset('images/banner/consult-main-banner.jpg')}}" class="img-responsive">
+                    <img src="images/banner/consult-main-banner.jpg" class="img-responsive">
                     <h4>project Title</h4>
                     <p>Brief description on project here. Brief description on project here.</p>
+                    <div class="edit-btn  project-tr">
+                        <span><i class="fa fa-edit"></i> </span>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="edit-btn  project-tr">
+        <span>Add New Project <i class="fa fa-plus"></i> </span>
     </div>
 </div>
 
@@ -188,6 +242,7 @@
         </div>
     </div>
 </div>
+
 
 @include('layouts.footer')
 <script>
