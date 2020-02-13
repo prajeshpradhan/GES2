@@ -1,3 +1,35 @@
+/*################################# Editable index(admin) css starts here #################################*/
+
+.edit-btn{
+    position:absolute;
+    display: none;
+    background:seagreen;
+    color:white;
+    border-radius: 5px;
+    padding:10px;
+}
+.top-right{
+    top:10rem;
+    right:5rem;
+}
+.service-tr{
+    top: 0;
+    right: 0;
+}
+.project-tr{
+    top:1rem;
+    right:1rem;
+}
+.upw{
+    top:1rem;
+
+}
+.service-block:hover .edit-btn, .project-container:hover >.edit-btn, .project:hover .edit-btn{
+    display: block;
+}
+/*################################# Editable index(admin) css ends here #################################*/
+
+
 
 /*################################# main banner css starts here #################################*/
 
