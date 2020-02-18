@@ -192,48 +192,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="editProject" role="dialog">
-        <div class="modal-dialog width70" >
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h3>Edit Project</h3>
-                        </div>
-                        <div class="col-sm-12">
-                            <button type="button" class="close cl-ed" data-dismiss="modal">&times;</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-body" style="height: auto">
-                    <form action="{{route('addProject')}}" method="POST" id="project-form">
-                        @csrf
-                        <div class="form-group">
-                            <label class="col-form-label" for="title">Title</label><input class="form-control" type="text" id="title" name="title" ><br>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-form-label" for="description">Description</label><textarea class="form-control" id="description" name="description" placeholder="Type Description here"></textarea><br>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-form-label" for="photo">Photo</label><input class="form-control" id="photo" type="file" name="photo"><br>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-form-label" for="categories">Categories</label><select class="form-control" id="categories" name="category" >
-                                @foreach($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
-                                @endforeach
-                            </select></div>
-                    </form>
 
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" type="submit" form="project-form">Submit</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
 
 
 @endsection
