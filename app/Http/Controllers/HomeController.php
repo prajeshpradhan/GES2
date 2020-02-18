@@ -22,6 +22,6 @@ class HomeController extends Controller
             "categories"=>$category,
             "projects"=>$projects,
         ];
-        return view('layouts.master')->with($data);
+        return view('home')->with($data);
     }
 }

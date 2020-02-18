@@ -13,6 +13,10 @@
 
 Route::get('/','HomeController@index')->name('index');
 
-Auth::routes(['register'=>false]);
+Route::prefix('admin')->group( function(){
+   Route::post('/addProject','AdminController@addProject')->name('addProject');
+});
+
+Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
