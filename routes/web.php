@@ -15,6 +15,9 @@ Route::get('/','HomeController@index')->name('index');
 
 Route::prefix('admin')->group( function(){
    Route::post('/addProject','AdminController@addProject')->name('addProject');
+   Route::get('/project/{id?}','AdminController@showProject')->name('project');
+   Route::put('/updateProject/{id?}','AdminController@updateProject')->name('updateProject');
+   Route::delete('/deleteProject/{id?}','AdminController@deleteProject')->name('deleteProject');
 });
 
 Auth::routes();

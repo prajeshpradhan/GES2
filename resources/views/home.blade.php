@@ -93,18 +93,18 @@
                         @else
                             <div id="{{$category->id}}" class="tab-pane fade">
                                 @endif
-                                <h3>project category A</h3>
+                                <h3>Project {{$category->name}}</h3>
                                 <div class="project-detail">
                                     @foreach($projects as $project)
                                         @if($project->category_id == $category->id)
                                             <div class="project">
-                                                <img src="images/banner/consult-main-banner.jpg" class="img-responsive">
-                                                <h4>{{$project->name}}</h4>
+                                                <img src="{{url('uploads/'.$project->photo)}}" class="img-responsive">
+                                                <h4>{{$project->title}}</h4>
                                                 <p>{{$project->description}}</p>
                                                 @auth
-                                                    <div class="edit-btn  project-tr">
+                                                    <a onclick="editProject({{$project->id}})" class="edit-btn  project-tr">
                                                         <span><i class="fa fa-edit"></i> </span>
-                                                    </div>
+                                                    </a>
                                                 @endauth
                                             </div>
                                         @endif
@@ -114,10 +114,9 @@
                             @endforeach
                     </div>
                     @auth
-                        <div class="edit-btn  project-tr"><a onclick="displayDiv()">
+                        <a onclick="addProject()" class="edit-btn  project-tr">
                             <span>Add New Project <i class="fa fa-plus"></i> </span>
-                            </a>
-                        </div>
+                        </a>
                     @endauth
         </div>
     </div>
@@ -148,15 +147,15 @@
 @endsection
 
 @section('modal')
-
-    <div class="modal fade" id="addProject" role="dialog">
+    @auth
+    <div class="modal fade" id="Project" role="dialog">
         <div class="modal-dialog width70" >
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3>Add Project</h3>
+                            <h3 id="modal-title">Add Project</h3>
                         </div>
                         <div class="col-sm-12">
                             <button type="button" class="close cl-ed" data-dismiss="modal">&times;</button>
@@ -164,7 +163,7 @@
                     </div>
                 </div>
                 <div class="modal-body" style="height: auto">
-                    <form action="{{route('addProject')}}" method="POST" id="project-form">
+                    <form action="" method="POST" id="project-form" enctype="multipart/form-data">
                         @csrf
                             <div class="form-group">
                             <label class="col-form-label" for="title">Title</label><input class="form-control" type="text" id="title" name="title"><br>
@@ -185,13 +184,13 @@
 
                 </div>
                 <div class="modal-footer">
-                            <button class="btn btn-primary" type="submit" form="project-form">Submit</button>
+                            <button id="submitFormModal" class="btn btn-primary" type="submit" form="project-form">Submit</button>
                 </div>
             </div>
 
         </div>
     </div>
-
+    @endauth
 
 
 
@@ -200,9 +199,40 @@
 @section('js')
 
     <script>
+        
+@auth
         function displayDiv(){
-            $('#addProject').modal({show:true});
+            $('#Project').modal({show:true});
         }
+
+        function addProject() {
+            $('#project-form').attr('action','{{route('addProject')}}');
+            $('.temp').remove();
+            $('#modal-title').text('Add Project');
+            $('#title').val('');
+            $('#description').val('');
+            $('#categories').val('');
+            $('#submitFormModal').text('Submit');
+            displayDiv();
+        }
+
+        function editProject(id) {
+            $.getJSON('{{route('project')}}/'+id,function (response) {
+                // console.log(response.title);
+                $('#project-form').attr('action','{{route('updateProject')}}/'+id);
+                $('.temp').remove();
+                $('#project-form').prepend('<input class="temp" type="hidden" name="_method" value="PUT"/>');
+                $('#modal-title').text('Edit Project');
+                $('#title').val(response.title);
+                $('#description').val(response.description);
+                $('#categories').val(response.category);
+                $('#submitFormModal').text('Update');
+                $('#Project .modal-dialog .modal-content .modal-header').append('<form class="temp" id="project-delete" method="POST" action="{{route('deleteProject')}}/'+id+'">@csrf @method('delete')');
+                $('#Project .modal-dialog .modal-content .modal-footer').append('<button class="btn btn-danger temp" type="submit" form="project-delete">Delete</button>');
+                displayDiv();
+            })
+        }
+@endauth
     </script>
 
 @endsection
