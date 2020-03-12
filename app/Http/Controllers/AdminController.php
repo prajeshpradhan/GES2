@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\User;
+use App\CoverImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -16,6 +18,26 @@ class AdminController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function addCoverImage(Request $request)
+    {
+        if($request->hasFile('image')){
+        $image = $request->file('image')->storeAs('public',"cover.jpg");
+        return back();
+    }else{
+        echo"error";
+    }
+    }
+
+    public function editTagline(Request $request)
+    {
+        $store= User::findOrFail(1);
+        $store->tagline = $request->tagline;
+        $store->subtag = $request->subtag;
+        if($store->update()){
+            return back();
+        }
     }
 
     public function addProject(Request $request)

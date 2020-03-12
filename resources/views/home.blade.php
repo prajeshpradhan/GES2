@@ -1,20 +1,55 @@
 @extends('layouts.master')
 
+@section('title','Home')
+
+@section('css')
+<style>
+textarea{
+    background: transparent;
+}
+
+.edit-textarea{
+    resize: none;
+    border-radius: 5px;
+    border: none;
+    margin: 0px;
+    overflow: hidden;
+    width: 300px;
+}
+</style>
+@endsection
+
 @section('content')
-    <div class="main-banner">
-        <div class="main-banner-txt">
-            <h1>Place Your Tagline Here</h1>
-            <p>Place your supporting text or any brief detail about your consultancy here</p>
+    <div class="main-banner" style="background: url('{{asset('storage/cover.jpg')}}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;">
+        <div class="main-banner-txt" id="banner-txt">
+            <h1>{{$user->tagline}}</h1>
+            <p>{{$user->subtag}}</p>
             <div class="banner-btn">
                 <button class="bn-btn blue-bg left">Button</button>
                 <button class="bn-btn red-bg right">Second Button </button>
             </div>
             @auth
-                <div id="bannerText-edit" class="edit-btn upw">
+                <div onclick="displayDiv()" id="bannerText-edit" class="edit-btn upw">
                     <span>Edit Banner Text <i class="fa fa-edit"></i> </span>
                 </div>
         </div>
-        <div id="cover-edit" class="edit-btn top-right">
+        <div class="main-banner-txt" id="banner-txt-edit" style="display: none">
+            <form action="{{route('editTagline')}}" method="post">
+            @csrf
+            <h1>
+            <textarea name="tagline" class="edit-textarea" >{{$user->tagline}}</textarea>
+            </h1>
+            <p>
+            <textarea name="subtag" class="edit-textarea">{{$user->subtag}}</textarea>
+            </p>
+            <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+        </div>
+        <div onclick="displayCoverModal()" id="cover-edit" class="edit-btn top-right">
             <span>Edit Cover Image <i class="fa fa-edit"></i> </span>
             @endauth
         </div>
@@ -90,34 +125,28 @@
             @foreach($categories as $category)
                 @if($loop->first)
                     <div id="{{$category->id}}" class="tab-pane fade in active">
-                        @else
-                            <div id="{{$category->id}}" class="tab-pane fade">
-                                @endif
-                                <h3>Project {{$category->name}}</h3>
-                                <div class="project-detail">
-                                    @foreach($projects as $project)
-                                        @if($project->category_id == $category->id)
-                                            <div class="project">
-                                                <img src="{{url('uploads/'.$project->photo)}}" class="img-responsive">
-                                                <h4>{{$project->title}}</h4>
-                                                <p>{{$project->description}}</p>
-                                                @auth
-                                                    <a onclick="editProject({{$project->id}})" class="edit-btn  project-tr">
-                                                        <span><i class="fa fa-edit"></i> </span>
-                                                    </a>
-                                                @endauth
-                                            </div>
-                                        @endif
-                                    @endforeach
+                @else
+                    <div id="{{$category->id}}" class="tab-pane fade">
+                @endif
+                        <h3>Project {{$category->name}}</h3>
+                        <div class="project-detail">
+                        @foreach($projects as $project)
+                            @if($project->category_id == $category->id)
+                                <div class="project">
+                                    <img src="{{url('uploads/'.$project->photo)}}" class="img-responsive">
+                                    <h4>{{$project->title}}</h4>
+                                    <p>{{$project->description}}</p>
+                                    @auth
+                                        <a onclick="editProject({{$project->id}})" class="edit-btn  project-tr">
+                                            <span><i class="fa fa-edit"></i> </span>
+                                        </a>
+                                    @endauth
                                 </div>
-                            </div>
-                            @endforeach
+                            @endif
+                        @endforeach
+                        </div>
                     </div>
-                    @auth
-                        <a onclick="addProject()" class="edit-btn  project-tr">
-                            <span>Add New Project <i class="fa fa-plus"></i> </span>
-                        </a>
-                    @endauth
+            @endforeach
         </div>
     </div>
     <div id="count" class="count-container">
@@ -148,14 +177,15 @@
 
 @section('modal')
     @auth
-    <div class="modal fade" id="Project" role="dialog">
+
+    <div class="modal fade" id="coverUpdate" role="dialog">
         <div class="modal-dialog width70" >
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3 id="modal-title">Add Project</h3>
+                            <h3>Update Cover Picture</h3>
                         </div>
                         <div class="col-sm-12">
                             <button type="button" class="close cl-ed" data-dismiss="modal">&times;</button>
@@ -163,28 +193,29 @@
                     </div>
                 </div>
                 <div class="modal-body" style="height: auto">
-                    <form action="" method="POST" id="project-form" enctype="multipart/form-data">
+                    <div class="" style="border: 1px solid lightgray; padding: 10px; box-shadow: 0 10px 15px rgba(0,0,0,0.6)">
+                        <form action="{{route('addCoverImage')}}" method="POST" id="submit-cover" enctype="multipart/form-data">
                         @csrf
-                            <div class="form-group">
-                            <label class="col-form-label" for="title">Title</label><input class="form-control" type="text" id="title" name="title"><br>
-                            </div>
-                            <div class="form-group">
-                            <label class="col-form-label" for="description">Description</label><textarea class="form-control" id="description" name="description" placeholder="Type Description here"></textarea><br>
-                            </div>
-                            <div class="form-group">
-                            <label class="col-form-label" for="photo">Photo</label><input class="form-control" id="photo" type="file" name="photo"><br>
-                            </div>
-                            <div class="form-group">
-                            <label class="col-form-label" for="categories">Categories</label><select class="form-control" id="categories" name="category" >
-                                @foreach($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
-                                @endforeach
-                                </select></div>
-                    </form>
+                        <div class="upl-new-container">
+                            <div class="upl-innner">
+                                <input type="file" name="image" id="banner-update" onchange="addclearfile()" style="width:100%;height:100%">
+                                <div id="clear-file">
 
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="existing-container">
+                            <h3>Choose existing image:</h3> 
+                            <div class="exsisting-opt">
+                                
+                            </div>
+                            <input type="submit" onclick="return checkform()" id="banner-submit" class="btn update-button width100" name="submit-banner" value="Submit" >
+                        </div> -->
+                        </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                            <button id="submitFormModal" class="btn btn-primary" type="submit" form="project-form">Submit</button>
+                    <button id="submitFormModal" class="btn btn-primary" type="submit" form="submit-cover">Submit</button>
                 </div>
             </div>
 
@@ -199,22 +230,90 @@
 @section('js')
 
     <script>
+    
+    $(window).scroll(testScroll);
+    var viewed = false;
+
+    function isScrolledIntoView(elem) {
+        var docViewTop = $(window).scrollTop();
+        var docViewBottom = docViewTop + $(window).height();
+
+        var elemTop = $(elem).offset().top;
+        var elemBottom = elemTop + $(elem).height();
+        console.log("here");
+        console.log(elemTop);
+        console.log(elemBottom);
+
+        return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+    }
+
+    function testScroll() {
+        var test= isScrolledIntoView($(".count-container"));
+        console.log("test"+test+"test");
+        if (test && !viewed) {
+            viewed = true;
+
+            console.log("there");
+            $('#counter1').each(function () {
+                $(this).prop('Counter',0).animate({
+                    Counter: 5
+                }, {
+                    duration: 1500,
+                    easing: 'swing',
+                    step: function (now) {
+                        $(this).text(Math.ceil(now));
+                    }
+                });
+            });
+            $('#counter2').each(function () {
+                $(this).prop('Counter',0).animate({
+                    Counter: 10
+                }, {
+                    duration: 1500,
+                    easing: 'swing',
+                    step: function (now) {
+                        $(this).text(Math.ceil(now));
+                    }
+                });
+            });
+            $('#counter3').each(function () {
+                $(this).prop('Counter',0).animate({
+                    Counter: 50
+                }, {
+                    duration: 1500,
+                    easing: 'swing',
+                    step: function (now) {
+                        $(this).text(Math.ceil(now));
+                    }
+                });
+            });
+
+        }
+    }
         
 @auth
-        function displayDiv(){
-            $('#Project').modal({show:true});
+        function addclearfile() {
+            $('#clear-file').empty();
+            $('#clear-file').append('<p onclick="clearfile()" style="position:absolute;right:15px;top:10px">Clear File</p>');
         }
 
-        function addProject() {
-            $('#project-form').attr('action','{{route('addProject')}}');
-            $('.temp').remove();
-            $('#modal-title').text('Add Project');
-            $('#title').val('');
-            $('#description').val('');
-            $('#categories').val('');
-            $('#submitFormModal').text('Submit');
-            displayDiv();
+
+        
+        function displayCoverModal(){
+            $('#coverUpdate').modal({show:true});
         }
+
+        function clearfile() {
+        $('input[name=banner]').val('');
+        $('#clear-file').empty();
+    }
+
+        function displayDiv(){
+            $('#banner-txt-edit').show();
+            $('#banner-txt').hide();
+        }
+
+       
 
         function editProject(id) {
             $.getJSON('{{route('project')}}/'+id,function (response) {

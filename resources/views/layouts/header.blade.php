@@ -1,13 +1,13 @@
 <div class="header-container">
     <div id="Header" class="header">
         <div class="logo-container">
-            <img src="{{asset('images/GES%20Logo%20New.png')}}" class="img-responsive">
+            <a href="{{route('index')}}"><img src="{{asset('images/GES%20Logo%20New.png')}}" class="img-responsive"></a>
         </div>
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Projects</a></li>
+            <li><a href="{{route('index')}}">Home</a></li>
+            <li><a href="{{route('about')}}">About Us</a></li>
+            <li><a href="{{route('services')}}">Services</a></li>
+            <li><a href="{{route('projects')}}">Projects</a></li>
             <li><a href="#">Contact Us</a></li>
             {{--            TEMP LOGOUT BUTTON--}}
             @auth

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Project;
+use App\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -16,12 +17,36 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $category = Category::all();
+        $categories = Category::all();
         $projects = Project::all();
         $data = [
-            "categories"=>$category,
+            "user"=>User::findOrFail(1),
+            "categories"=>$categories,
             "projects"=>$projects,
         ];
         return view('home')->with($data);
     }
+
+    public function services()
+    {
+        // $services = Service::all();
+        return view('services');
+    }
+
+    public function about()
+    {
+        return view('about');
+    }
+
+    public function projects()
+    {
+        $projects = Project::all();
+        $categories = Category::all();
+        $data = [
+            'projects'=>$projects,
+            'categories'=>$categories,
+        ];
+        return view('projects')->with($data);
+    }
+
 }
